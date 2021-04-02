@@ -1,15 +1,23 @@
 const router = require('express').Router();
 const Budgets = require('../models/Budgets');
 const private = require('./verifyToken');
+const { budgetsValidation } = require('../validation');
 
 router.post('/', private, async (req, res) => {
-    
+
     // validate data
 
-    const { error } = registerValidation(req.body);
+    // const { error } = budgetsValidation(req.body);
 
-    if (error) {
-        res.status(400).send(error.details[0].message);
+    // if (error) {
+    //     res.status(400).send(error.details[0].message);
+    //     return;
+    // }
+
+    const error = budgetsValidation(req.body);
+
+    if(error) {
+        res.status(400).send(error);
         return;
     }
 
@@ -17,8 +25,7 @@ router.post('/', private, async (req, res) => {
     const user = req.user;
 
     const budgetsObj = new Budgets({
-        userId: user.id,
-        budgets: req.body.budgets
+        ...req.body, userId: user.id,
     })
 
     // Saving Budgets

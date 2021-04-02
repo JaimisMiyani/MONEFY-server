@@ -1,48 +1,45 @@
-const Joi = require('@hapi/joi');
+const Joi = require('joi');
 
 const registerValidation = (data) => {
-    
-    const schema = {
+
+    const schema = Joi.object({
         name: Joi.string().max(255).required(),
         email: Joi.string().min(6).max(255).required().email(),
         password: Joi.string().min(6).max(1024).required()
-    };
+    });
 
-    return Joi.validate(data, schema);
+    return schema.validate(data);
 }
 
 const loginValidation = (data) => {
 
-    const schema = {
+    const schema = Joi.object({
         email: Joi.string().min(6).max(255).required().email(),
         password: Joi.string().min(6).max(1024).required()
-    };
+    });
 
-    return Joi.validate(data, schema);
+    return schema.validate(data);
 }
 
-const budgetValidation = (data) => {
+const budgetsValidation = (data) => {
 
-    const schema = {
-        userId: Joi.string().required(),
-        budgets: Joi.object().keys({
-            home: Joi.number().required,
-            healthAndInsurance: Joi.number().required,
-            food: Joi.number().required,
-            interest: Joi.number().required,
-            transportation: Joi.number().required,
-            subscriptionAndExpenses: Joi.number().required,
-            misc: Joi.number().required,
-            materialGoods: Joi.number().required,
-            venmo: Joi.number().required,
-        })
-    };
+    const schema = Joi.object({
+        home: Joi.number().required,
+        healthAndInsurance: Joi.number().required,
+        food: Joi.number().required,
+        interest: Joi.number().required,
+        transportation: Joi.number().required,
+        subscriptionAndExpenses: Joi.number().required,
+        misc: Joi.number().required,
+        materialGoods: Joi.number().required,
+        venmo: Joi.number().required
+    });
 
-    return Joi.validate(data, schema);
+    return schema.validate(data);
 }
 
 module.exports = {
     registerValidation,
     loginValidation,
-    budgetValidation
+    budgetsValidation
 };
