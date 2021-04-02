@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
     const userName = await User.findOne({ email: req.body.email });
 
     if (!userName) {
-        res.status(100).send("Email doesn't exists");
+        res.status(400).send("Email doesn't exists");
         return;
     }
 
@@ -31,7 +31,7 @@ router.get('/', async (req, res) => {
         if(flag) res.send("Budget is not defined yet ...");
         else res.send(data);
     } catch(error){
-        res.status(100).send('Invalid User');
+        res.status(400).send('Invalid User');
     }
 });
 
