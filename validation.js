@@ -38,8 +38,18 @@ const budgetsValidation = (data) => {
     return schema.validate(data);
 }
 
+const budgetUpdateValidation = (data) => {
+    const schema = Joi.object({
+        budget: Joi.string().valid(...['home','food','interest','transportation','subscriptionAndExpenses','misc','materialGoods','venmo','healthAndInsurance']).required(),
+        value: Joi.number().required()
+    });
+
+    return schema.validate(data);
+}
+
 module.exports = {
     registerValidation,
     loginValidation,
-    budgetsValidation
+    budgetsValidation,
+    budgetUpdateValidation
 };

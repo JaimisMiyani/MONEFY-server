@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const Budgets = require('../models/Budgets');
 const private = require('./verifyToken');
-const { budgetsValidation } = require('../validation');
+const { budgetsValidation, budgetUpdateValidation } = require('../validation');
 
 router.post('/', private, async (req, res) => {
 
@@ -31,6 +31,52 @@ router.post('/', private, async (req, res) => {
         res.status(404).send(error);
     }
 
+});
+
+router.get('/', private, async (req, res) => {
+
+    const user = req.user;
+
+    try {
+        const data = await Budgets.findOne({ userId: user._id });
+
+        if (!data)
+            return res.send("Budget is not defined yet ...");
+        
+        res.status(200).send(data);
+
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
+
+router.put('/', private, async (req, res) => {
+
+    const { error } = budgetUpdateValidation(req.body);
+
+    if (error) {
+        res.status(400).send(error.details[0].message);
+        return;
+    }
+
+    const user = req.user;
+
+    try {
+        const data = await Budgets.find({userId: user._id});
+
+        if (!data)
+            return res.send("Budget is not defined yet ...");
+        
+        await Budgets.find({userId: user._id})
+        .then(budgets => {
+            budgets[req.body.budget] = req.body.value;
+        });
+
+        res.status(200).send("Budget updated!");
+
+    } catch (error) {
+        res.status(400).send(error);
+    }
 });
 
 module.exports = router;
