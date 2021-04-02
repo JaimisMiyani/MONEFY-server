@@ -7,30 +7,25 @@ router.post('/', private, async (req, res) => {
 
     // validate data
 
-    // const { error } = budgetsValidation(req.body);
+    const { error } = budgetsValidation(req.body);
 
-    // if (error) {
-    //     res.status(400).send(error.details[0].message);
-    //     return;
-    // }
-
-    const error = budgetsValidation(req.body);
-
-    if(error) {
-        res.status(400).send(error);
+    if (error) {
+        res.status(400).send(error.details[0].message);
         return;
     }
 
     // Getting the user
     const user = req.user;
 
+    // console.log(user);
+
     const budgetsObj = new Budgets({
-        ...req.body, userId: user.id,
+        ...req.body, userId: user._id,
     })
 
     // Saving Budgets
     try {
-        const savedBudgets = await budgetObj.save();
+        const savedBudgets = await budgetsObj.save();
         res.status(200).send(savedBudgets);
     } catch (error) {
         res.status(404).send(error);

@@ -24,15 +24,15 @@ const loginValidation = (data) => {
 const budgetsValidation = (data) => {
 
     const schema = Joi.object({
-        home: Joi.number().required,
-        healthAndInsurance: Joi.number().required,
-        food: Joi.number().required,
-        interest: Joi.number().required,
-        transportation: Joi.number().required,
-        subscriptionAndExpenses: Joi.number().required,
-        misc: Joi.number().required,
-        materialGoods: Joi.number().required,
-        venmo: Joi.number().required
+        home: Joi.number().required(),
+        healthAndInsurance: Joi.number().required(),
+        food: Joi.number().required(),
+        interest: Joi.number().required(),
+        transportation: Joi.number().required(),
+        subscriptionAndExpenses: Joi.number().required(),
+        misc: Joi.number().required(),
+        materialGoods: Joi.number().required(),
+        venmo: Joi.number().required()
     });
 
     return schema.validate(data);
