@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 // Import Routes
 const authRoute = require('./routes/auth');
 const postRoute = require('./routes/posts');
+const budgetsRoute = require('./routes/budgets');
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.use(express.json());
 // Route Middlewares
 app.use('/api/user', authRoute);
 app.use('/api/posts', postRoute);
+app.use('/api/budgets', budgetsRoute);
 
 const PORT = process.env.PORT || 3000;
 

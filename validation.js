@@ -21,7 +21,28 @@ const loginValidation = (data) => {
     return Joi.validate(data, schema);
 }
 
+const budgetValidation = (data) => {
+
+    const schema = {
+        userId: Joi.string().required(),
+        budgets: Joi.object().keys({
+            home: Joi.number().required,
+            healthAndInsurance: Joi.number().required,
+            food: Joi.number().required,
+            interest: Joi.number().required,
+            transportation: Joi.number().required,
+            subscriptionAndExpenses: Joi.number().required,
+            misc: Joi.number().required,
+            materialGoods: Joi.number().required,
+            venmo: Joi.number().required,
+        })
+    };
+
+    return Joi.validate(data, schema);
+}
+
 module.exports = {
     registerValidation,
-    loginValidation
+    loginValidation,
+    budgetValidation
 };
