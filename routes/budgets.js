@@ -67,10 +67,7 @@ router.put('/', private, async (req, res) => {
         if (!data)
             return res.send("Budget is not defined yet ...");
         
-        await Budgets.find({userId: user._id})
-        .then(budgets => {
-            budgets[req.body.budget] = req.body.value;
-        });
+        await Budgets.findOneAndUpdate({userId: user._id}, {[req.body.budget]: req.body.value});
 
         res.status(200).send("Budget updated!");
 
