@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 
 // Import Routes
 const authRoute = require('./routes/auth');
+const postRoute = require('./routes/posts');
 
 dotenv.config();
 
@@ -25,8 +26,9 @@ app.use(express.json());
 
 // Route Middlewares
 app.use('/api/user', authRoute);
+app.use('/api/posts', postRoute);
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`Server running in port: ${PORT}`);
