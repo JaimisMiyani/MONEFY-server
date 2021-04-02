@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
     const userName = await User.findOne({ email: req.body.email });
 
     if (!userName) {
-        res.status(400).send("Email doesn't exists");
+        res.status(100).send("Email doesn't exists");
         return;
     }
 
