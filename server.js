@@ -7,6 +7,7 @@ const dotenv = require('dotenv');
 const authRoute = require('./routes/auth');
 const postRoute = require('./routes/posts');
 const budgetsRoute = require('./routes/budgets');
+const getBudgetRoute = require('./routes/getBudget');
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ app.use(express.json());
 app.use('/api/user', authRoute);
 app.use('/api/posts', postRoute);
 app.use('/api/budgets', budgetsRoute);
+app.use('/api/getBudget', getBudgetRoute);
 
 const PORT = process.env.PORT || 3000;
 
