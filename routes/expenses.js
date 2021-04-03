@@ -98,7 +98,7 @@ router.put('/reset', private, async (req, res) => {
             if(err) {
                 res.status(400).send(err);
             } 
-            res.send(obj)       
+            res.status(200).send("Expenses reset");       
          }); 
          
     } catch (error) {
