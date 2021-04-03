@@ -1,13 +1,13 @@
 const router = require('express').Router();
-const Budgets = require('../models/Budgets');
+const Expenses = require('../models/Expenses');
 const private = require('./verifyToken');
-const { budgetsValidation, budgetUpdateValidation } = require('../validation');
+const { expensesValidation, expenseUpdateValidation } = require('../validation');
 
 router.post('/', private, async (req, res) => {
 
     // validate data
 
-    const { error } = budgetsValidation(req.body);
+    const { error } = expensesValidation(req.body);
 
     if (error) {
         res.status(400).send(error.details[0].message);
@@ -19,14 +19,14 @@ router.post('/', private, async (req, res) => {
 
     // console.log(user);
 
-    const budgetsObj = new Budgets({
+    const expensesObj = new Expenses({
         ...req.body, userId: user._id,
     })
 
-    // Saving Budgets
+    // Saving Expenses
     try {
-        const savedBudgets = await budgetsObj.save();
-        res.status(200).send(savedBudgets);
+        const savedExpenses = await expensesObj.save();
+        res.status(200).send(savedExpenses);
     } catch (error) {
         res.status(404).send(error);
     }
@@ -38,10 +38,10 @@ router.get('/', private, async (req, res) => {
     const user = req.user;
 
     try {
-        const data = await Budgets.findOne({ userId: user._id });
+        const data = await Expenses.findOne({ userId: user._id });
 
         if (!data)
-            return res.send("Budgets are not defined yet ...");
+            return res.send("Expenses are not defined yet ...");
         
         res.status(200).send(data);
 
@@ -52,7 +52,7 @@ router.get('/', private, async (req, res) => {
 
 router.put('/', private, async (req, res) => {
 
-    const { error } = budgetUpdateValidation(req.body);
+    const { error } = expenseUpdateValidation(req.body);
 
     if (error) {
         res.status(400).send(error.details[0].message);
@@ -62,14 +62,16 @@ router.put('/', private, async (req, res) => {
     const user = req.user;
 
     try {
-        const data = await Budgets.find({userId: user._id});
+        const data = await Expenses.findOne({userId: user._id});
 
         if (!data)
-            return res.send("Budgets are not defined yet ...");
-        
-        await Budgets.findOneAndUpdate({userId: user._id}, {[req.body.budget]: req.body.value});
+            return res.send("Expenses are not defined yet ...");
 
-        res.status(200).send("Budget updated!");
+        const newValue = (req.body.value + data[req.body.expense]);
+        
+        await Expenses.findOneAndUpdate({userId: user._id}, {[req.body.expense]: newValue});
+
+        res.status(200).send("Expense updated!");
 
     } catch (error) {
         res.status(400).send(error);
