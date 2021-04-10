@@ -2,6 +2,7 @@ const router = require('express').Router();
 const Expenses = require('../models/Expenses');
 const private = require('./verifyToken');
 const { expensesValidation, expenseUpdateValidation } = require('../validation');
+const { string } = require('joi');
 
 router.post('/', private, async (req, res) => {
 
@@ -67,12 +68,39 @@ router.put('/', private, async (req, res) => {
         if (!data)
             return res.status(400).json({ error: "Expenses are not defined yet ..." });
 
-        const newValue = (req.body.value + data[req.body.expense]);
+        const flag = typeof req.body.value;
+        let add = req.body.value;
+        if(flag == string){
+            add = parseFloat(req.body.value);
+        }
 
-        await Expenses.findOneAndUpdate({ userId: user._id }, { [req.body.expense]: newValue });
+        const newValue = (add + data[req.body.expense]);
+        
+        await Expenses.findOneAndUpdate({userId: user._id}, {[req.body.expense]: newValue});
 
-        res.status(200).json({ message: "Expense updated!" });
+        res.status(200).send("Expenses updated");
 
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
+
+router.put('/reset', private, async (req, res) => {
+
+    const user = req.user;
+    try {
+        const data = await Expenses.findOne({userId: user._id});
+
+        if (!data)
+            return res.send("Expenses are not defined yet ...");
+
+        Expenses.findOneAndUpdate({ userId : user._id }, { "$set": { "home": 0, "food": 0, "interest": 0, "transportation": 0, "subscriptionAndExpenses" : 0, "misc" : 0, "materialGoods" : 0, "venmo" : 0, "healthAndInsurance" : 0}}).exec(function(err, obj){
+            if(err) {
+                res.status(400).send(err);
+            } 
+            res.status(200).send("Expenses reset");       
+         }); 
+         
     } catch (error) {
         res.status(400).json({ error });
     }
