@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-
+const cors = require('./routes/cors')
 
 // Import Routes
 const authRoute = require('./routes/auth');
@@ -26,9 +26,10 @@ app.use(express.json());
 
 
 // Route Middlewares
-app.use('/api/user', authRoute);
-app.use('/api/budgets', budgetsRoute);
-app.use('/api/expenses', expensesRoute);
+app.use('/api/user', cors, authRoute);
+app.use('/api/budgets', cors, budgetsRoute);
+app.use('/api/expenses', cors, expensesRoute);
+
 
 const PORT = process.env.PORT || 3000;
 

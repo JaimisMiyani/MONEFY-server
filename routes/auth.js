@@ -11,7 +11,7 @@ router.post('/register', async (req, res) => {
     const { error } = registerValidation(req.body);
 
     if (error) {
-        res.status(400).send(error.details[0].message);
+        res.status(400).json(error.details[0].message);
         return;
     }
 
@@ -20,7 +20,7 @@ router.post('/register', async (req, res) => {
     const emailExist = await User.findOne({ email: req.body.email });
 
     if (emailExist) {
-        res.status(400).send("Email already exists!");
+        res.status(400).json({ error: 'Email already exists!' });
         return;
     }
 
@@ -40,9 +40,9 @@ router.post('/register', async (req, res) => {
     // save user
     try {
         const savedUser = await user.save();
-        res.send({ user: user.id });
+        res.status(200).json({ user: user.id });
     } catch (error) {
-        res.status(400).send(error);
+        res.status(400).json({ error });
     }
 })
 
@@ -54,7 +54,7 @@ router.post('/login', async (req, res) => {
     const { error } = loginValidation(req.body);
 
     if (error) {
-        res.status(400).send(error.details[0].message);
+        res.status(400).json({ error: error.details[0].message });
         return;
     }
 
@@ -63,21 +63,21 @@ router.post('/login', async (req, res) => {
     const userName = await User.findOne({ email: req.body.email });
 
     if (!userName) {
-        res.status(400).send("Email doesn't exists");
+        res.status(400).json({ error: 'Email doesn\'t exists' });
         return;
     }
 
     // validate password
 
     const validPass = await bcrypt.compare(req.body.password, userName.password);
-    
-    if(!validPass){
-        res.status(400).send("Invalid password");
+
+    if (!validPass) {
+        res.status(400).json({ error: 'Invalid password' });
         return;
     }
 
-    const token = jwt.sign({_id : userName._id}, process.env.TOKEN_SECRET);
-    res.header('token-name', token).send(token);
+    const token = jwt.sign({ _id: userName._id }, process.env.TOKEN_SECRET);
+    res.header('token-name', token).json({token});
 })
 
 

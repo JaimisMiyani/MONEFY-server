@@ -10,7 +10,7 @@ router.post('/', private, async (req, res) => {
     const { error } = expensesValidation(req.body);
 
     if (error) {
-        res.status(400).send(error.details[0].message);
+        res.status(400).json({ error: error.details[0].message });
         return;
     }
 
@@ -26,9 +26,9 @@ router.post('/', private, async (req, res) => {
     // Saving Expenses
     try {
         const savedExpenses = await expensesObj.save();
-        res.status(200).send(savedExpenses);
+        res.status(200).json({ savedExpenses });
     } catch (error) {
-        res.status(404).send(error);
+        res.status(404).json({ error });
     }
 
 });
@@ -41,12 +41,12 @@ router.get('/', private, async (req, res) => {
         const data = await Expenses.findOne({ userId: user._id });
 
         if (!data)
-            return res.send("Expenses are not defined yet ...");
-        
-        res.status(200).send(data);
+            return res.status(400).json({ error: "Expenses are not defined yet ..." });
+
+        res.status(200).json({ data });
 
     } catch (error) {
-        res.status(400).send(error);
+        res.status(400).json({ error });
     }
 });
 
@@ -55,26 +55,26 @@ router.put('/', private, async (req, res) => {
     const { error } = expenseUpdateValidation(req.body);
 
     if (error) {
-        res.status(400).send(error.details[0].message);
+        res.status(400).json({ error: error.details[0].message });
         return;
     }
 
     const user = req.user;
 
     try {
-        const data = await Expenses.findOne({userId: user._id});
+        const data = await Expenses.findOne({ userId: user._id });
 
         if (!data)
-            return res.send("Expenses are not defined yet ...");
+            return res.status(400).json({ error: "Expenses are not defined yet ..." });
 
         const newValue = (req.body.value + data[req.body.expense]);
-        
-        await Expenses.findOneAndUpdate({userId: user._id}, {[req.body.expense]: newValue});
 
-        res.status(200).send("Expense updated!");
+        await Expenses.findOneAndUpdate({ userId: user._id }, { [req.body.expense]: newValue });
+
+        res.status(200).json({ message: "Expense updated!" });
 
     } catch (error) {
-        res.status(400).send(error);
+        res.status(400).json({ error });
     }
 });
 
