@@ -81,7 +81,7 @@ router.put('/', private, async (req, res) => {
         res.status(200).send("Expenses updated");
 
     } catch (error) {
-        res.status(400).send(error);
+        res.status(400).json({error});
     }
 });
 
@@ -96,9 +96,9 @@ router.put('/reset', private, async (req, res) => {
 
         Expenses.findOneAndUpdate({ userId : user._id }, { "$set": { "home": 0, "food": 0, "interest": 0, "transportation": 0, "subscriptionAndExpenses" : 0, "misc" : 0, "materialGoods" : 0, "venmo" : 0, "healthAndInsurance" : 0}}).exec(function(err, obj){
             if(err) {
-                res.status(400).send(err);
+                res.status(400).json({error: err});
             } 
-            res.status(200).send("Expenses reset");       
+            res.status(200).json({message: "Expenses reset"});       
          }); 
          
     } catch (error) {

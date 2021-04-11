@@ -10,7 +10,7 @@ router.post('/', private, async (req, res) => {
     const { error } = budgetsValidation(req.body);
 
     if (error) {
-        res.status(400).send(error.details[0].message);
+        res.status(400).json({error: error.details[0].message});
         return;
     }
 
@@ -41,7 +41,7 @@ router.get('/', private, async (req, res) => {
         const data = await Budgets.findOne({ userId: user._id });
 
         if (!data)
-            return res.send("Budgets are not defined yet ...");
+            return res.status(400).json({error:"Budgets are not defined yet ..."});
 
         res.status(200).json({ data });
 
