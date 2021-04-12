@@ -40,7 +40,7 @@ const budgetsValidation = (data) => {
 
 const budgetUpdateValidation = (data) => {
     const schema = Joi.object({
-        expense: Joi.string().valid(...['groceries', 'housing', 'transportation', 'clothing', 'health', 'disretionary', 'education', 'communication', 'misc']).required(),
+        budget: Joi.string().valid(...['groceries', 'housing', 'transportation', 'clothing', 'health', 'disretionary', 'education', 'communication', 'misc']).required(),
         value: Joi.number().required()
     });
 
