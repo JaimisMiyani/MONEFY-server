@@ -4,10 +4,10 @@ module.exports = function(req, res, next) {
 
     // verify token
 
-    const token = req.header('token-name');
+    const token = req.header('token');
     
     if(!token) {
-        res.status(400).send('Access Denied');
+        res.status(400).json({error : 'Access Denied'});
         return;
     }
 
@@ -16,6 +16,6 @@ module.exports = function(req, res, next) {
         req.user = verified;
         next();
     } catch(error){
-        res.status(400).send('Invalido Token');
+        res.status(400).json({error : 'Invalid Token'});
     }
 }

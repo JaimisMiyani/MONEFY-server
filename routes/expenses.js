@@ -94,7 +94,17 @@ router.put('/reset', private, async (req, res) => {
         if (!data)
             return res.send("Expenses are not defined yet ...");
 
-        Expenses.findOneAndUpdate({ userId : user._id }, { "$set": { "home": 0, "food": 0, "interest": 0, "transportation": 0, "subscriptionAndExpenses" : 0, "misc" : 0, "materialGoods" : 0, "venmo" : 0, "healthAndInsurance" : 0}}).exec(function(err, obj){
+        Expenses.findOneAndUpdate({ userId : user._id }, { "$set": { 
+        "groeries": 0,
+        "housing": 0,
+        "transportation": 0,
+        "clothing": 0,
+        "health": 0,
+        "disretionary": 0,
+        "education": 0,
+        "communication": 0,
+        "misc": 0}
+        }).exec(function(err, obj){
             if(err) {
                 res.status(400).json({error: err});
             } 

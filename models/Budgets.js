@@ -5,15 +5,11 @@ const budgetsSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
     },
-    home: {
+    groceries: {
         type: Number,
         required: true
     },
-    food: {
-        type: Number,
-        required: true
-    },
-    healthAndInsurance: {
+    housing: {
         type: Number,
         required: true
     },
@@ -21,23 +17,27 @@ const budgetsSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    subscriptionAndExpenses: {
+    clothing: {
         type: Number,
         required: true
     },
-    materialGoods: {
+    health: {
         type: Number,
         required: true
     },
-    interest: {
+    disretionary: {
+        type: Number,
+        required: true
+    },
+    education: {
+        type: Number,
+        required: true
+    },
+    communication: {
         type: Number,
         required: true
     },
     misc: {
-        type: Number,
-        required: true
-    },
-    venmo: {
         type: Number,
         required: true
     }

@@ -24,15 +24,15 @@ const loginValidation = (data) => {
 const budgetsValidation = (data) => {
 
     const schema = Joi.object({
-        home: Joi.number().required(),
-        healthAndInsurance: Joi.number().required(),
-        food: Joi.number().required(),
-        interest: Joi.number().required(),
+        groceries: Joi.number().required(),
+        housing: Joi.number().required(),
         transportation: Joi.number().required(),
-        subscriptionAndExpenses: Joi.number().required(),
-        misc: Joi.number().required(),
-        materialGoods: Joi.number().required(),
-        venmo: Joi.number().required()
+        clothing: Joi.number().required(),
+        health: Joi.number().required(),
+        disretionary: Joi.number().required(),
+        education: Joi.number().required(),
+        communication: Joi.number().required(),
+        misc: Joi.number().required()
     });
 
     return schema.validate(data);
@@ -40,7 +40,7 @@ const budgetsValidation = (data) => {
 
 const budgetUpdateValidation = (data) => {
     const schema = Joi.object({
-        budget: Joi.string().valid(...['home','food','interest','transportation','subscriptionAndExpenses','misc','materialGoods','venmo','healthAndInsurance']).required(),
+        expense: Joi.string().valid(...['groceries', 'housing', 'transportation', 'clothing', 'health', 'disretionary', 'education', 'communication', 'misc']).required(),
         value: Joi.number().required()
     });
 
@@ -50,15 +50,15 @@ const budgetUpdateValidation = (data) => {
 const expensesValidation = (data) => {
 
     const schema = Joi.object({
-        home: Joi.number().required(),
-        healthAndInsurance: Joi.number().required(),
-        food: Joi.number().required(),
-        interest: Joi.number().required(),
+        groceries: Joi.number().required(),
+        housing: Joi.number().required(),
         transportation: Joi.number().required(),
-        subscriptionAndExpenses: Joi.number().required(),
-        misc: Joi.number().required(),
-        materialGoods: Joi.number().required(),
-        venmo: Joi.number().required()
+        clothing: Joi.number().required(),
+        health: Joi.number().required(),
+        disretionary: Joi.number().required(),
+        education: Joi.number().required(),
+        communication: Joi.number().required(),
+        misc: Joi.number().required()
     });
 
     return schema.validate(data);
@@ -66,7 +66,7 @@ const expensesValidation = (data) => {
 
 const expenseUpdateValidation = (data) => {
     const schema = Joi.object({
-        expense: Joi.string().valid(...['home','food','interest','transportation','subscriptionAndExpenses','misc','materialGoods','venmo','healthAndInsurance']).required(),
+        expense: Joi.string().valid(...['groceries', 'housing', 'transportation', 'clothing', 'health', 'disretionary', 'education', 'communication', 'misc']).required(),
         value: Joi.number().required()
     });
 
@@ -81,3 +81,4 @@ module.exports = {
     expensesValidation,
     expenseUpdateValidation
 };
+

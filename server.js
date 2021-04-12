@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const cors = require('./routes/cors')
+const cors = require('cors')
 
 // Import Routes
 const authRoute = require('./routes/auth');
@@ -12,6 +12,7 @@ dotenv.config();
 
 const app = express();
 
+app.use(cors())
 //connect to db
 
 mongoose.connect(process.env.DB_CONNECT,
@@ -26,9 +27,9 @@ app.use(express.json());
 
 
 // Route Middlewares
-app.use('/api/user', cors, authRoute);
-app.use('/api/budgets', cors, budgetsRoute);
-app.use('/api/expenses', cors, expensesRoute);
+app.use('/api/user', authRoute);
+app.use('/api/budgets', budgetsRoute);
+app.use('/api/expenses', expensesRoute);
 
 
 const PORT = process.env.PORT || 3000;
