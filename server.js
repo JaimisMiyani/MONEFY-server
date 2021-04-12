@@ -7,6 +7,7 @@ const cors = require('cors')
 const authRoute = require('./routes/auth');
 const budgetsRoute = require('./routes/budgets');
 const expensesRoute = require('./routes/expenses');
+const profileRoute = require('./routes/profile')
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ app.use(express.json());
 app.use('/api/user', authRoute);
 app.use('/api/budgets', budgetsRoute);
 app.use('/api/expenses', expensesRoute);
+app.use('/api/profile', profileRoute);
 
 
 const PORT = process.env.PORT || 3000;

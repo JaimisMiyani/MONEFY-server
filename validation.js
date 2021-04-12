@@ -47,6 +47,15 @@ const budgetUpdateValidation = (data) => {
     return schema.validate(data);
 }
 
+const profileValidation = (data) => {
+    const schema = Joi.object({
+        age: Joi.number().required(),
+        income: Joi.number().required()
+    });
+
+    return schema.validate(data);
+}
+
 const expensesValidation = (data) => {
 
     const schema = Joi.object({
@@ -79,6 +88,7 @@ module.exports = {
     budgetsValidation,
     budgetUpdateValidation,
     expensesValidation,
-    expenseUpdateValidation
+    expenseUpdateValidation,
+    profileValidation
 };
 

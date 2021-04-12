@@ -2,6 +2,7 @@ const router = require('express').Router();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const private = require('./verifyToken');
 const { registerValidation, loginValidation } = require('../validation')
 
 router.post('/register', async (req, res) => {
@@ -46,6 +47,12 @@ router.post('/register', async (req, res) => {
     }
 })
 
+router.get('/getUserId', private, async (req, res) => {
+
+    console.log("here");
+    res.status(200).json({userId: req.user._id});
+})
+
 
 router.post('/login', async (req, res) => {
 
@@ -77,7 +84,7 @@ router.post('/login', async (req, res) => {
     }
 
     const token = jwt.sign({ _id: userName._id }, process.env.TOKEN_SECRET);
-    res.header('token-name', token).json({token});
+    res.header('token-name', token).json({token, id: userName._id});
 })
 
 

@@ -51,7 +51,7 @@ router.get('/', private, async (req, res) => {
     }
 });
 
-router.put('/', private, async (req, res) => {
+router.put('/addExpense', private, async (req, res) => {
 
     const { error } = expenseUpdateValidation(req.body);
 
@@ -69,10 +69,8 @@ router.put('/', private, async (req, res) => {
             return res.status(400).json({ error: "Expenses are not defined yet ..." });
 
         const flag = typeof req.body.value;
-        let add = parseFloat(req.body.value);;
-        // if(flag == string){
-        //     add = parseFloat(req.body.value);
-        // }
+        
+        let add = parseFloat(req.body.value);
 
         const newValue = (add + parseFloat(data[req.body.expense]));
         
