@@ -56,7 +56,7 @@ router.put('/', private, async (req, res) => {
     const { error } = expenseUpdateValidation(req.body);
 
     if (error) {
-        res.status(400).json({ error: error.details[0].message });
+        res.status(400).json({error: error.details[0].message });
         return;
     }
 
@@ -69,16 +69,16 @@ router.put('/', private, async (req, res) => {
             return res.status(400).json({ error: "Expenses are not defined yet ..." });
 
         const flag = typeof req.body.value;
-        let add = req.body.value;
-        if(flag == string){
-            add = parseFloat(req.body.value);
-        }
+        let add = parseFloat(req.body.value);;
+        // if(flag == string){
+        //     add = parseFloat(req.body.value);
+        // }
 
-        const newValue = (add + data[req.body.expense]);
+        const newValue = (add + parseFloat(data[req.body.expense]));
         
         await Expenses.findOneAndUpdate({userId: user._id}, {[req.body.expense]: newValue});
 
-        res.status(200).send("Expenses updated");
+        res.status(200).send("Expense Updated");
 
     } catch (error) {
         res.status(400).json({error});
@@ -91,8 +91,9 @@ router.put('/reset', private, async (req, res) => {
     try {
         const data = await Expenses.findOne({userId: user._id});
 
-        if (!data)
+        if (!data) {
             return res.send("Expenses are not defined yet ...");
+        }
 
         Expenses.findOneAndUpdate({ userId : user._id }, { "$set": { 
         "groeries": 0,

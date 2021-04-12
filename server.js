@@ -13,8 +13,8 @@ dotenv.config();
 const app = express();
 
 app.use(cors())
-//connect to db
 
+//connect to db
 mongoose.connect(process.env.DB_CONNECT,
     { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false },
     () => {
