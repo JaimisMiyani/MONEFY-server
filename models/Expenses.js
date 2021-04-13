@@ -40,6 +40,10 @@ const expensesSchema = new mongoose.Schema({
     misc: {
         type: Number,
         required: true
+    },
+    totalExpense: {
+        type: Number,
+        required: true
     }
 });
 

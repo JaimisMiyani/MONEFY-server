@@ -21,7 +21,7 @@ router.post('/', private, async (req, res) => {
     // console.log(user);
 
     const expensesObj = new Expenses({
-        ...req.body, userId: user._id,
+        ...req.body, userId: user._id, totalExpense: 0
     })
 
     // Saving Expenses
@@ -56,7 +56,7 @@ router.put('/addExpense', private, async (req, res) => {
     const { error } = expenseUpdateValidation(req.body);
 
     if (error) {
-        res.status(400).json({error: error.details[0].message });
+        res.status(400).json({ error: error.details[0].message });
         return;
     }
 
@@ -69,17 +69,17 @@ router.put('/addExpense', private, async (req, res) => {
             return res.status(400).json({ error: "Expenses are not defined yet ..." });
 
         const flag = typeof req.body.value;
-        
+
         let add = parseFloat(req.body.value);
 
         const newValue = (add + parseFloat(data[req.body.expense]));
-        
-        await Expenses.findOneAndUpdate({userId: user._id}, {[req.body.expense]: newValue});
+
+        await Expenses.findOneAndUpdate({ userId: user._id }, { [req.body.expense]: newValue, totalExpense: (data.totalExpense + add) });
 
         res.status(200).send("Expense Updated");
 
     } catch (error) {
-        res.status(400).json({error});
+        res.status(400).json({ error });
     }
 });
 
@@ -87,29 +87,31 @@ router.put('/reset', private, async (req, res) => {
 
     const user = req.user;
     try {
-        const data = await Expenses.findOne({userId: user._id});
+        const data = await Expenses.findOne({ userId: user._id });
 
         if (!data) {
             return res.send("Expenses are not defined yet ...");
         }
 
-        Expenses.findOneAndUpdate({ userId : user._id }, { "$set": { 
-        "groeries": 0,
-        "housing": 0,
-        "transportation": 0,
-        "clothing": 0,
-        "health": 0,
-        "disretionary": 0,
-        "education": 0,
-        "communication": 0,
-        "misc": 0}
-        }).exec(function(err, obj){
-            if(err) {
-                res.status(400).json({error: err});
-            } 
-            res.status(200).json({message: "Expenses reset"});       
-         }); 
-         
+        Expenses.findOneAndUpdate({ userId: user._id }, {
+            "$set": {
+                "groeries": 0,
+                "housing": 0,
+                "transportation": 0,
+                "clothing": 0,
+                "health": 0,
+                "disretionary": 0,
+                "education": 0,
+                "communication": 0,
+                "misc": 0
+            }
+        }).exec(function (err, obj) {
+            if (err) {
+                res.status(400).json({ error: err });
+            }
+            res.status(200).json({ message: "Expenses reset" });
+        });
+
     } catch (error) {
         res.status(400).json({ error });
     }
