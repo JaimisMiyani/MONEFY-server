@@ -21,7 +21,7 @@ router.post('/', private, async (req, res) => {
     // console.log(user);
 
     const expensesObj = new Expenses({
-        ...req.body, userId: user._id, totalExpense: 0
+        ...req.body, userId: user._id
     })
 
     // Saving Expenses
@@ -29,6 +29,7 @@ router.post('/', private, async (req, res) => {
         const savedExpenses = await expensesObj.save();
         res.status(200).json({ savedExpenses });
     } catch (error) {
+        
         res.status(404).json({ error });
     }
 
@@ -103,7 +104,8 @@ router.put('/reset', private, async (req, res) => {
                 "disretionary": 0,
                 "education": 0,
                 "communication": 0,
-                "misc": 0
+                "misc": 0,
+                "totalExpense" : 0
             }
         }).exec(function (err, obj) {
             if (err) {

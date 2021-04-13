@@ -67,7 +67,8 @@ const expensesValidation = (data) => {
         disretionary: Joi.number().required(),
         education: Joi.number().required(),
         communication: Joi.number().required(),
-        misc: Joi.number().required()
+        misc: Joi.number().required(),
+        totalExpense: Joi.number().required(),
     });
 
     return schema.validate(data);
