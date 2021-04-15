@@ -85,11 +85,10 @@ router.post('/login', async (req, res) => {
     res.header('token-name', token).json({token, id: userName._id});
 })
 
-router.get('/getUserName', async (req, res) => {
-    console.log("req body", req.body);
-    const userName = await User.findOne({ email: req.body.email });
-    // console.log("server side", userName)
-    res.status(200).json({ Name: userName });
+router.get('/getUserName', private, async (req, res) => {
+    const user = await User.findOne({ _id: req.user._id });
+    console.log(user);
+    res.status(200).json({ userName: user.name });
 })
 
 
