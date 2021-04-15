@@ -48,8 +48,6 @@ router.post('/register', async (req, res) => {
 })
 
 router.get('/getUserId', private, async (req, res) => {
-
-    console.log("here");
     res.status(200).json({userId: req.user._id});
 })
 
@@ -85,6 +83,13 @@ router.post('/login', async (req, res) => {
 
     const token = jwt.sign({ _id: userName._id }, process.env.TOKEN_SECRET);
     res.header('token-name', token).json({token, id: userName._id});
+})
+
+router.get('/getUserName', async (req, res) => {
+    console.log("req body", req.body);
+    const userName = await User.findOne({ email: req.body.email });
+    // console.log("server side", userName)
+    res.status(200).json({ Name: userName });
 })
 
 
