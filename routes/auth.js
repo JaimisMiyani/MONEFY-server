@@ -87,8 +87,11 @@ router.post('/login', async (req, res) => {
 
 router.get('/getUserName', private, async (req, res) => {
     const user = await User.findOne({ _id: req.user._id });
-    console.log(user);
-    res.status(200).json({ userName: user.name });
+    res.status(200).json({ userName: user.name, userEmail : user.email });
+})
+
+router.put('/deleteAccount', private, async (req, res) => {
+    console.log(req.body);
 })
 
 
