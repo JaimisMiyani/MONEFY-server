@@ -1,5 +1,8 @@
 const router = require('express').Router();
 const User = require('../models/User');
+const Budgets = require('../models/Budgets');
+const Expenses = require('../models/Expenses');
+const Profile = require('../models/Profile');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const private = require('./verifyToken');
@@ -90,9 +93,26 @@ router.get('/getUserName', private, async (req, res) => {
     res.status(200).json({ userName: user.name, userEmail : user.email });
 })
 
-router.put('/deleteAccount', private, async (req, res) => {
-    console.log(req.body);
-})
+router.get('/deleteAccount', private, async (req, res) => {
+    await User.findOneAndDelete({ userId: req.user._id }, function(error, offer){
+        // res.status(200).status("Budget deleted successfully");
+        console.log('1')
+    })
+    
+    await Budgets.findOneAndDelete({ userId: req.user._id }, function(error, offer){
+        // res.status(200).status("Budget deleted successfully");
+        console.log('2')
+    })
 
+    await Expenses.findOneAndDelete({ userId: req.user._id }, function(error, offer){
+        // res.status(200).status("Expenses deleted successfully");
+        console.log('3')
+    })
+
+    await Profile.findOneAndDelete({ userId: req.user._id }, function(error, offer){
+        // res.status(200).status("Profile deleted successfully");
+        console.log('4')
+    })
+})
 
 module.exports = router;
