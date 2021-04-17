@@ -94,25 +94,15 @@ router.get('/getUserName', private, async (req, res) => {
 })
 
 router.get('/deleteAccount', private, async (req, res) => {
-    await User.findOneAndDelete({ userId: req.user._id }, function(error, offer){
-        // res.status(200).status("Budget deleted successfully");
-        console.log('1')
-    })
+    await User.findOneAndDelete({ userId: req.user._id });
     
-    await Budgets.findOneAndDelete({ userId: req.user._id }, function(error, offer){
-        // res.status(200).status("Budget deleted successfully");
-        console.log('2')
-    })
+    await Budgets.findOneAndDelete({ userId: req.user._id });
 
-    await Expenses.findOneAndDelete({ userId: req.user._id }, function(error, offer){
-        // res.status(200).status("Expenses deleted successfully");
-        console.log('3')
-    })
+    await Expenses.findOneAndDelete({ userId: req.user._id });
 
-    await Profile.findOneAndDelete({ userId: req.user._id }, function(error, offer){
-        // res.status(200).status("Profile deleted successfully");
-        console.log('4')
-    })
+    await Profile.findOneAndDelete({ userId: req.user._id });
+
+    res.status(200).json({message: 'Account Deleted!'});
 })
 
 module.exports = router;
