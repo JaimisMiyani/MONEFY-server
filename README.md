@@ -9,31 +9,31 @@ Monefy is a React.js / Node.js personal finance application, developed to help u
 ## Screenshots
 Home Page
 
-<img src="homePage.png" width="800">
+<img src="/public/homePage.png" width="800">
 
 Create Account
 
-<img src="createAcc.png" width="800">
+<img src="/public/createAcc.png" width="800">
 
 Add Expenses
 
-<img src="addExpenses.png" width="800">
+<img src="/public/addExpenses.png" width="800">
 
 Track Your Spending
 
-<img src="budgetBreakdown.png" width="800">
+<img src="/public/budgetBreakdown.png" width="800">
 
 Realize Potential Investment
 
-<img src="investment.png" width="800">
+<img src="/public/investment.png" width="800">
 
 Customize Budgets
 
-<img src="budgets.png" width="800">
+<img src="/public/budgets.png" width="800">
 
 Learn More On Investing
 
-<img src="resources.png" width="800">
+<img src="/public/resources.png" width="800">
 
 
 ## Technology Used
