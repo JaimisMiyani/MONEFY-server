@@ -13,7 +13,7 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors())
+
 
 //connect to db
 mongoose.connect(process.env.DB_CONNECT,
@@ -23,7 +23,7 @@ mongoose.connect(process.env.DB_CONNECT,
     })
 
 // Middleware
-
+app.use(cors())
 app.use(express.json());
 
 
